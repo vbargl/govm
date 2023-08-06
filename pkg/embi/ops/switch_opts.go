@@ -2,7 +2,8 @@ package ops
 
 import (
 	"barglvojtech.net/govm/pkg/embi/env"
-	"barglvojtech.net/govm/pkg/internal/versionutil"
+	"barglvojtech.net/govm/pkg/x/versionutil"
+
 	"barglvojtech.net/x/pkg/errutil"
 )
 

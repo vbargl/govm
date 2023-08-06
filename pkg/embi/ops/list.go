@@ -10,7 +10,7 @@ import (
 
 	"barglvojtech.net/govm/pkg/embi/types"
 	"barglvojtech.net/govm/pkg/internal/optionutil"
-	"barglvojtech.net/govm/pkg/internal/versionutil"
+	"barglvojtech.net/govm/pkg/x/versionutil"
 
 	"barglvojtech.net/x/pkg/errutil"
 )

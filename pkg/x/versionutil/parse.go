@@ -16,7 +16,7 @@ func Parse(version string) (p VersionParts, _ error) {
 
 	switch f, _ := regexputil.FindString(`\d+`, version[parsed:]); {
 	case f != "":
-		p.major = f
+		p.Major = f
 		parsed += len(f)
 	default:
 		return VersionParts{}, fmt.Errorf("major version is required")
@@ -24,24 +24,24 @@ func Parse(version string) (p VersionParts, _ error) {
 
 	switch f, _ := regexputil.FindString(`\.\d+`, version[parsed:]); {
 	case f != "":
-		p.minor = f[1:]
+		p.Minor = f[1:]
 		parsed += len(f)
 	default:
 		return VersionParts{}, fmt.Errorf("minor version is required")
 	}
 
 	if f, _ := regexputil.FindString(`\.\d+`, version[parsed:]); f != "" {
-		p.build = f[1:]
+		p.Patch = f[1:]
 		parsed += len(f)
 	}
 
-	if f, _ := regexputil.FindString(`rc\d+`, version[parsed:]); p.mark == "" && f != "" {
-		p.mark = f
+	if f, _ := regexputil.FindString(`rc\d+`, version[parsed:]); p.PreRelease == "" && f != "" {
+		p.PreRelease = f
 		parsed += len(f)
 	}
 
-	if f, _ := regexputil.FindString(`beta\d+`, version[parsed:]); p.mark == "" && f != "" {
-		p.mark = f
+	if f, _ := regexputil.FindString(`beta\d+`, version[parsed:]); p.PreRelease == "" && f != "" {
+		p.PreRelease = f
 		parsed += len(f)
 	}
 

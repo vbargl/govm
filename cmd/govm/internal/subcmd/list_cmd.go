@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"strings"
 
+	"golang.org/x/exp/slices"
+
 	"barglvojtech.net/govm/pkg/embi/ops"
+
 	"barglvojtech.net/x/pkg/errutil"
 	"barglvojtech.net/x/pkg/flagutil"
-	"golang.org/x/exp/slices"
 )
 
 var listUsage = strings.TrimSpace(`

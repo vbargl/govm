@@ -5,15 +5,16 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path"
 	"path/filepath"
+
+	"github.com/schollz/progressbar/v3"
 
 	"barglvojtech.net/govm/pkg/embi/env"
 	"barglvojtech.net/govm/pkg/embi/types"
 	"barglvojtech.net/govm/pkg/internal/optionutil"
-	"barglvojtech.net/govm/pkg/internal/versionutil"
+	"barglvojtech.net/govm/pkg/x/versionutil"
+
 	"barglvojtech.net/x/pkg/errutil"
-	"github.com/schollz/progressbar/v3"
 )
 
 type DownloadOpt func(*DownloadOp)
@@ -38,6 +39,7 @@ type DownloadOp struct {
 	vars         env.Variables
 	version      types.Version
 	outputWriter io.Writer
+	filename     string
 
 	// process variables
 
@@ -68,7 +70,7 @@ func (op *DownloadOp) constructUrl() {
 
 	var err error
 
-	op.url, err = versionutil.Url(op.vars.VersionUrl, types.QualifiedVersion{Version: op.version})
+	op.url, err = versionutil.Format(versionutil.UrlFormat, versionutil.Qualify(op.version))
 	errutil.AssignIfErr(&op.err, err, errutil.PrefixWith("could not create url"))
 }
 
@@ -100,7 +102,7 @@ func (op *DownloadOp) createDirs() {
 	var err error
 
 	cacheDir := op.vars.CacheDir()
-	op.cacheFile = filepath.Join(cacheDir, path.Base(op.url))
+	op.cacheFile = filepath.Join(cacheDir, op.filename)
 	op.versionDir = filepath.Join(op.vars.VersionsDir(), op.version.String())
 
 	err = os.MkdirAll(cacheDir, 0755)

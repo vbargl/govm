@@ -12,6 +12,7 @@ import (
 	"barglvojtech.net/govm/pkg/internal/executil"
 	"barglvojtech.net/govm/pkg/internal/fsutil"
 	"barglvojtech.net/govm/pkg/internal/optionutil"
+
 	"barglvojtech.net/x/pkg/errutil"
 )
 
@@ -51,31 +52,6 @@ func (op *SwitchOp) Process() error {
 	op.verifyExistanceOfVersion()
 	op.relinkGoExecutable()
 	return op.err
-
-	// sdk, err := env.Gosdk()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// bin, err := env.Gobin()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// path := filepath.Join(sdk, version)
-	// if _, err := os.Stat(path); err != nil {
-	// 	fmt.Printf("go version %s not found.\nRun command below to download it:\n\tgovm download %s\n", version, version)
-	// 	os.Exit(1)
-	// }
-
-	// if _, err := os.Stat(bin); err == nil {
-	// 	os.Remove(bin)
-	// }
-
-	// if err := os.Symlink(filepath.Join(path, "bin", "go"), bin); err != nil {
-	// 	log.Fatal(err)
-	// }
-	return nil
 }
 
 func (op *SwitchOp) verifyExistanceOfVersion() {

@@ -25,8 +25,8 @@ func Compare(a, b types.Version) int {
 		}
 	}
 
-	lMajorA, lMajorB := len(partsA.major), len(partsB.major)
-	majorDiff := strings.Compare(partsA.major, partsB.major)
+	lMajorA, lMajorB := len(partsA.Major), len(partsB.Major)
+	majorDiff := strings.Compare(partsA.Major, partsB.Major)
 	switch {
 	case lMajorA != lMajorB:
 		return lMajorB - lMajorA
@@ -34,8 +34,8 @@ func Compare(a, b types.Version) int {
 		return majorDiff
 	}
 
-	lMinorA, lMinorB := len(partsA.minor), len(partsB.minor)
-	minorDiff := strings.Compare(partsA.minor, partsB.minor)
+	lMinorA, lMinorB := len(partsA.Minor), len(partsB.Minor)
+	minorDiff := strings.Compare(partsA.Minor, partsB.Minor)
 	switch {
 	case lMinorA != lMinorB:
 		return lMinorB - lMinorA
@@ -43,8 +43,8 @@ func Compare(a, b types.Version) int {
 		return -minorDiff
 	}
 
-	lBuildA, lBuildB := len(partsA.build), len(partsB.build)
-	buildDiff := strings.Compare(partsA.build, partsB.build)
+	lBuildA, lBuildB := len(partsA.Patch), len(partsB.Patch)
+	buildDiff := strings.Compare(partsA.Patch, partsB.Patch)
 	switch {
 	case lBuildA != lBuildB:
 		return lBuildB - lBuildA
@@ -52,7 +52,7 @@ func Compare(a, b types.Version) int {
 		return -buildDiff
 	}
 
-	lMarkA, lMarkB := len(partsA.mark), len(partsB.mark)
+	lMarkA, lMarkB := len(partsA.PreRelease), len(partsB.PreRelease)
 	switch {
 	// return the one without mark first
 	case lMarkA == 0 && lMarkB != 0:
@@ -61,13 +61,13 @@ func Compare(a, b types.Version) int {
 		return 1
 
 	// return rc before beta
-	case strings.HasPrefix(partsA.mark, "rc") && strings.HasPrefix(partsB.mark, "beta"):
+	case strings.HasPrefix(partsA.PreRelease, "rc") && strings.HasPrefix(partsB.PreRelease, "beta"):
 		return -1
-	case strings.HasPrefix(partsA.mark, "beta") && strings.HasPrefix(partsB.mark, "rc"):
+	case strings.HasPrefix(partsA.PreRelease, "beta") && strings.HasPrefix(partsB.PreRelease, "rc"):
 		return 1
 
 	// return the one with bigger number
 	default:
-		return -strings.Compare(partsA.mark, partsB.mark)
+		return -strings.Compare(partsA.PreRelease, partsB.PreRelease)
 	}
 }

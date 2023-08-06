@@ -9,7 +9,6 @@ import (
 	"barglvojtech.net/govm/pkg/internal/archiveutil"
 	"barglvojtech.net/govm/pkg/internal/fsutil"
 	"barglvojtech.net/govm/pkg/internal/optionutil"
-	"barglvojtech.net/govm/pkg/internal/versionutil"
 	"barglvojtech.net/x/pkg/errutil"
 )
 
@@ -31,8 +30,9 @@ type ExtractOp struct {
 
 	// config variables
 
-	vars    env.Variables
-	version types.Version
+	vars     env.Variables
+	version  types.Version
+	filename string
 
 	// process varialbes
 
@@ -57,15 +57,7 @@ func (op *ExtractOp) verifyFS() {
 		return
 	}
 
-	var err error
-
-	qualified := versionutil.Qualify(types.QualifiedVersion{Version: op.version})
-	filename, err := versionutil.Filename("", qualified)
-	if errutil.AssignIfErr(&op.err, err, errutil.PrefixWithFormatted("could not get filename for %s", op.version)) {
-		return
-	}
-
-	op.cacheFile = filepath.Join(op.vars.CacheDir(), filename)
+	op.cacheFile = filepath.Join(op.vars.CacheDir(), op.filename)
 	op.versionDir = filepath.Join(op.vars.VersionsDir(), op.version.String())
 
 	if !fsutil.Exists(op.cacheFile) {

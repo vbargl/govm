@@ -6,10 +6,6 @@ type Variables struct {
 	// ConfigFile path where variables below can be loaded from.
 	ConfigFile string
 
-	// VersionUrl which contains variables for version goos goarch and ext encapsulated in `${}`.
-	// If no url is specified, default one will be used: https://go.dev/dl/${version}.${goos}-${goarch}.${ext}.
-	VersionUrl string
-
 	// RuntimeDir where sdk will be extracted into.
 	RuntimeDir string
 

@@ -10,7 +10,6 @@ import (
 
 	"barglvojtech.net/govm/pkg/embi/env"
 	"barglvojtech.net/govm/pkg/embi/types"
-	"barglvojtech.net/govm/pkg/internal/archiveutil"
 	"barglvojtech.net/govm/pkg/internal/optionutil"
 	"barglvojtech.net/govm/pkg/internal/versionutil"
 	"barglvojtech.net/x/pkg/errutil"
@@ -59,7 +58,6 @@ func (op *DownloadOp) Process() error {
 	op.openRequest()
 	op.createDirs()
 	op.downloadFile()
-	op.extractFile()
 	return op.err
 }
 
@@ -137,13 +135,4 @@ func (op *DownloadOp) downloadFile() {
 	if errutil.AssignIfErr(&op.err, err, errutil.PrefixWith("error occured during download")) {
 		return
 	}
-}
-
-func (op *DownloadOp) extractFile() {
-	if op.err != nil {
-		return
-	}
-
-	err := archiveutil.Extract(op.cacheFile, op.versionDir)
-	errutil.AssignIfErr(&op.err, err, errutil.PrefixWithFormatted("could not extract file %s", op.cacheFile))
 }

@@ -19,7 +19,7 @@ func SetVersionToDownloadOp(version string) DownloadOpt {
 		var err error
 
 		op.version, err = versionutil.Normalize(version)
-		errutil.AssignIfErr(&op.err, err, errutil.PrefixWith("malformated version"))
+		errutil.AssignIfErr(&op.err, err, nil)
 	}
 }
 

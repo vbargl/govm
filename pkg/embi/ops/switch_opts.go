@@ -15,7 +15,7 @@ func SetEnvVarsToSwitchOp(value env.Variables) SwitchOpt {
 func SetVersionToSwitchOp(version string) SwitchOpt {
 	return func(op *SwitchOp) {
 		version, err := versionutil.Normalize(version)
-		if errutil.AssignIfErr(&op.err, err, errutil.PrefixWith("malformated version")) {
+		if errutil.AssignIfErr(&op.err, err, nil) {
 			return
 		}
 

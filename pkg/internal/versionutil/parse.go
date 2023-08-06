@@ -46,7 +46,7 @@ func Parse(version string) (p VersionParts, _ error) {
 	}
 
 	if len(version) != parsed {
-		return VersionParts{}, fmt.Errorf("version is malformed")
+		return VersionParts{}, fmt.Errorf("malformed version")
 	}
 
 	return p, nil

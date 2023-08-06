@@ -12,6 +12,6 @@ func Qualify(version types.QualifiedVersion) types.QualifiedVersion {
 	return types.QualifiedVersion{
 		Version: version.Version,
 		Goos:    strings.ToLower(stringutil.FirstNonEmpty(version.Goos, build.Default.GOOS)),
-		Goarch:  strings.ToLower(stringutil.FirstNonEmpty(version.Goos, build.Default.GOARCH)),
+		Goarch:  strings.ToLower(stringutil.FirstNonEmpty(version.Goarch, build.Default.GOARCH)),
 	}
 }

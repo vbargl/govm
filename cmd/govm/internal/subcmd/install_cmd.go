@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"barglvojtech.net/govm/pkg/embi/ops"
+	"barglvojtech.net/govm/pkg/embi/ops/opsutil"
 	"barglvojtech.net/x/pkg/errutil"
 	"barglvojtech.net/x/pkg/flagutil"
 )
@@ -32,10 +33,14 @@ func Install(args *flagutil.Args) {
 
 	version := args.Take()
 
-	op := ops.NewDownloadOp(
-		ops.SetVersionToDownloadOp(version),
+	err := opsutil.Process(
+		ops.NewDownloadOp(
+			ops.SetVersionToDownloadOp(version),
+		),
+		ops.NewExtractOp(
+			ops.SetVersionToExtractOp(version),
+		),
 	)
 
-	err := op.Process()
 	errutil.LogPrintIfErr(err, nil)
 }

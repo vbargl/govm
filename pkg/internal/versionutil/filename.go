@@ -9,17 +9,19 @@ import (
 )
 
 const (
-	// DefaultSdkUrl is url where all versions of go are available
-	DefaultVersionUrl = "https://go.dev/dl/${version}.${goos}-${goarch}.${ext}"
+	// DefaultVersionFilename is used for naming.
+	// Keep same as DefaultVersionUrl
+	DefaultVersionFilename = "${version}.${goos}-${goarch}.${ext}"
 )
 
-func Url(format string, version types.QualifiedVersion) (string, error) {
+// Filename
+func Filename(format string, version types.QualifiedVersion) (string, error) {
 	if version.Version == "" {
 		return "", fmt.Errorf("version is required param")
 	}
 
 	version = Qualify(version)
-	format = stringutil.FirstNonEmpty(format, DefaultVersionUrl)
+	format = stringutil.FirstNonEmpty(format, DefaultVersionFilename)
 
 	return stringutil.Interpolate(format, map[string]string{
 		"version": version.Version.String(),
